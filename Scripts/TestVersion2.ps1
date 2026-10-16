@@ -34,4 +34,24 @@ if (Test-Path $zip) {
     Get-FileHash $zip -Algorithm SHA256
 } else {
     Write-Host "ZIP-файл відсутній"
-}	
+}
+
+
+
+$dir = "C:\ProgramData\LocalAI\llama.cpp"
+Set-Location $dir
+
+foreach ($exe in @(
+    "llama.exe",
+    "llama-cli.exe",
+    "llama-server.exe"
+)) {
+    Write-Host "`n========== $exe ==========" -ForegroundColor Cyan
+
+    if (Test-Path ".\$exe") {
+        & ".\$exe" --version 2>&1
+        Write-Host "ExitCode: $LASTEXITCODE"
+    } else {
+        Write-Host "Файл не знайдено"
+    }
+}
