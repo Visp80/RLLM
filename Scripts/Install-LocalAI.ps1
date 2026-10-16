@@ -4,8 +4,8 @@ $ErrorActionPreference = "Stop"
 
 $Url = "https://github.com/ggml-org/llama.cpp/releases/download/b11700/llama-b11700-bin-win-cpu-x64.zip"
 $InstallDir = "C:\ProgramData\LocalAI\llama.cpp"
-$ZipPath = Join-Path $env:TEMP "llama-b11700-bin-win-cpu-x64.zip"
-$TempDir = Join-Path $env:TEMP "llama-b11700-extract"
+$ZipPath = "C:\Windows\Temp\llama-b11700-bin-win-cpu-x64.zip"
+$TempDir = "C:\Windows\Temp\llama-b11700-extract"
 
 try {
     Write-Host "`n=== LOCALAI: ВСТАНОВЛЕННЯ LLAMA.CPP ===" -ForegroundColor Cyan
@@ -38,7 +38,7 @@ try {
         Remove-Item $ZipPath -Force
     }
 
-    Invoke-WebRequest -Uri $Url -OutFile $ZipPath
+    Invoke-WebRequest -Uri 'https://github.com/ggml-org/llama.cpp/releases/download/b11700/llama-b11700-bin-win-cpu-x64.zip' -OutFile  'C:\Windows\Temp\llama-b11700-bin-win-cpu-x64.zip'
 
     if (-not (Test-Path $ZipPath) -or
         (Get-Item $ZipPath).Length -eq 0) {
@@ -48,7 +48,8 @@ try {
     # Розпакування у тимчасовий каталог
     Write-Host "`n[2/4] Розпакування архіву..." -ForegroundColor Yellow
 
-    Expand-Archive -Path $ZipPath -DestinationPath $TempDir -Force
+    Expand-Archive -Path 'C:\Windows\Temp\llama-b11700-bin-win-cpu-x64.zip' -DestinationPath 'C:\Windows\Temp\llama-b11700-extract' -Force
+
 
     # Пошук виконуваного файла сервера
     $Server = Get-ChildItem -Path $TempDir `
@@ -65,8 +66,7 @@ try {
     Write-Host "`n[3/4] Копіювання файлів у $InstallDir ..." `
         -ForegroundColor Yellow
 
-    Copy-Item -Path (Join-Path $SourceDir "*") `
-        -Destination $InstallDir -Recurse -Force
+    Copy-Item -Path (' C:\Windows\Temp\llama-b11700-extract\*') -Destination 'C:\ProgramData\LocalAI\llama.cpp' -Recurse -Force
 
     # Перевірка встановлення
     Write-Host "`n[4/4] Перевірка встановлення..." `
