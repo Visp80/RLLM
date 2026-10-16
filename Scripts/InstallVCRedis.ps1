@@ -1,4 +1,4 @@
-$installer = "$env:USERPROFILE\Downloads\vc_redist.x64.exe"
+$installer = "C:\WINDOWS\TEMP\vc_redist.x64.exe"
 
 if (-not (Test-Path $installer)) {
     throw "Не знайдено інсталятор: $installer"
